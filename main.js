@@ -3,6 +3,7 @@ $(document).ready(initializeApp);
 function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
+
     display_stats(); 
     $(".resetBttn").click(reset_game_bttn);
     startGame();
@@ -11,10 +12,18 @@ function initializeApp(){
 function applyClicksOnSpaces() {
     $(".highlight").click(test);
     $(".highlight2").click(test);
+    applyClicksOnSpaces();
+    display_stats();
+    playerTurn();
 }
 
-function determineWinner(whiteCount, blackCount){
-    if (whiteCount > blackCount){
+function applyClicksOnSpaces() {
+    $(".highlight").click(flipCoins);
+    $(".resetBttn").click(reset_game_bttn);
+}
+
+function determineWinner(whiteScore, blackScore){
+    if (whiteScore > blackScore){
         showModal("white");
     }
     else{
@@ -25,14 +34,23 @@ function determineWinner(whiteCount, blackCount){
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
-        $('.modal-body').text("Congratulations White Player!")
+        $('.modal-body').text("Congratulations White Player!");
     }
     else {
-        $('.modal-body').text("Congratulations Black Player!")
+        $('.modal-body').text("Congratulations Black Player!");
     }
     $('.playAgain').on("click", function () {
         $('#winModal').addClass("hide");
     })
+}
+
+function playerTurn(){
+    if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+    }
+    else{
+        $('#player2').text('Player 2 Turn').addClass("border");
+    }
 }
 
 var gameRound = true;
@@ -226,12 +244,12 @@ var game_board = [
     [0,0,0,0,0,0,0,0]
 ];
 
+
 function create_board(){
     for(var rowIndex =0; rowIndex < game_board.length; rowIndex++){
         var row = $("<div>").addClass("row");
         for(var colIndex = 0; colIndex < game_board.length; colIndex ++){
             var square = $("<div>").addClass("square").attr("row", rowIndex).attr("col", colIndex);
-
             if(game_board[rowIndex][colIndex] === 1){
                 var whiteSquare = $("<div>").addClass("whiteSquare");
                 square.append(whiteSquare);
@@ -244,6 +262,7 @@ function create_board(){
             }
             row.append(square);
         }
+        //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
 }
