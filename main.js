@@ -1,11 +1,24 @@
 
 function determineWinner(whiteCount, blackCount){
     if (whiteCount > blackCount){
-    alert("Player 1 Wins!!!")
+    showModal("white");
     }
     else{
-    alert("Player 2 Wins!!!")
+    showModal("black");
     }
+}
+
+function showModal(color) {
+    $('#winModal').removeClass("hide");
+    if (color === "white") {
+        $('.modal-body').text("Congratulations White Player!")
+    }
+    else {
+        $('.modal-body').text("Congratulations Black Player!")
+    }
+    $('.playAgain').on("click", function () {
+        $('#winModal').addClass("hide");
+    })
 }
 
 $(document).ready(initializeApp);
@@ -99,5 +112,6 @@ function create_board(){
         $(".game_board_div").append(row);
     }
 }
+
 
 
