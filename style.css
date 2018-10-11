@@ -134,6 +134,8 @@ body {
 }
 .modal-body {
     align-content: center;
+    font-size: 40px;
+    color: white;
 }
 .hide{
     display: none;
