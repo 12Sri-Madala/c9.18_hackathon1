@@ -202,6 +202,7 @@ var game_board = [
     [0,0,0,0,0,0,0,0]
 ];
 
+
 function create_board(){
     for(var rowIndex =0; rowIndex < game_board.length; rowIndex++){
         var row = $("<div>").addClass("row");
@@ -220,6 +221,9 @@ function create_board(){
         $(".game_board_div").append(row);
     }
 }
+
+
+
 
 var playerOneScore = 0;
 var playerTwoScore = 0;
