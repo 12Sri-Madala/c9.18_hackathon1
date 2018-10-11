@@ -4,12 +4,14 @@ function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
 
-    display_stats(); 
+    display_stats();
     $(".resetBttn").click(reset_game_bttn);
+  
     startGame();
 }
 
 function applyClicksOnSpaces() {
+
     $(".highlight").click(flipCoins);
     $(".highlight2").click(flipCoins);
     display_stats();
@@ -29,33 +31,29 @@ function determineWinner(whiteScore, blackScore){
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
-        $('.modal-body').text("Congratulations White Player!");
+        $('.modal-body').text("Congratulations Player 1!");
     }
     else {
-        $('.modal-body').text("Congratulations Black Player!");
+        $('.modal-body').text("Congratulations Player 2!");
     }
     $('.playAgain').on("click", function () {
         $('#winModal').addClass("hide");
     })
 }
 
-function playerTurn(){
-    if (gameRound === true){
-        $('#player1').text('Player 1 Turn').addClass("border");
-    }
-    else{
-        $('#player2').text('Player 2 Turn').addClass("border");
-    }
-}
 
 var gameRound = true;
 // var coinsToFlip = null;
 
 function startGame(){
     if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+        $('#player2').text('Player 2 Turn').removeClass("border");
         player1AvailableSpaces();
         applyClicksOnSpaces();
     } else {
+        $('#player1').text('Player 1 Turn').removeClass("border");
+        $('#player2').text('Player 2 Turn').addClass("border");
         player2AvailableSpaces();
         applyClicksOnSpaces();
     }
@@ -175,7 +173,7 @@ function flipCoins(){
                         }
                     }
                 } 
-            } 
+            }
         } 
     } else {
         currentPlacedCoin.addClass("whiteSquare");
@@ -221,33 +219,25 @@ function flipCoins(){
         startGame();
     }
 
-function p1coinsInArray(){
-    for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
-        coinsToFlip[flipCoinInd].removClass("whiteSquare");
-        coinsToFlip[flipCoinInd].addClass("blackSquare")
-    }
-}
-
-function p2coinsInArray(){
-    for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
-        coinsToFlip[flipCoinInd].removClass("blackSquare");
-        coinsToFlip[flipCoinInd].addClass("whiteSquare")
-    }
-}
-
 function test(){
+
     var currentPlacedCoin = $(event.currentTarget);
     if (gameRound === true){
+
         currentPlacedCoin.addClass("blackSquare");
         $('.highlight2').off();
         $(".highlight2").removeClass("highlight2");
+        display_stats()
     } else if(gameRound === false){
+
         currentPlacedCoin.addClass("whiteSquare");
         $('.highlight').off();
         $(".highlight").removeClass("highlight");
+        display_stats()
     }
     gameRound = !gameRound;
-    startGame();  
+    startGame();
+
 }
       
 var game_board = [
@@ -281,20 +271,30 @@ function create_board(){
             }
             row.append(square);
         }
-        //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
 }
 
-
-
-
 var playerOneScore = 0;
 var playerTwoScore = 0;
 
-function display_stats(){
-    $(".whiteScore").text();
-    $(".blackScore").text();
+function display_stats() {
+
+    var blackSquareCounter = 0;
+    var whiteSquareCounter = 0;
+    for (arrayRow = 0; arrayRow < 8; arrayRow++) {
+        for (arrayCol = 0; arrayCol < 8; arrayCol++) {
+            var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
+            var currentPlayerContents = currentPlayer1GameSquare.find('div');
+            if (currentPlayerContents.hasClass("blackSquare")) {
+                blackSquareCounter++;
+                $(".blackScore").text(blackSquareCounter);
+            } else if (currentPlayerContents.hasClass("whiteSquare")){
+                whiteSquareCounter++;
+                $(".whiteScore").text(whiteSquareCounter);
+            }
+        }
+    }
 }
 
 function reset_game_bttn(){
