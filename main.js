@@ -5,6 +5,7 @@ function initializeApp(){
     create_board();
     applyClicksOnSpaces();
     display_stats();
+    playerTurn();
 }
 
 function applyClicksOnSpaces() {
@@ -12,8 +13,8 @@ function applyClicksOnSpaces() {
     $(".resetBttn").click(reset_game_bttn);
 }
 
-function determineWinner(whiteCount, blackCount){
-    if (whiteCount > blackCount){
+function determineWinner(whiteScore, blackScore){
+    if (whiteScore > blackScore){
         showModal("white");
     }
     else{
@@ -21,19 +22,26 @@ function determineWinner(whiteCount, blackCount){
     }
 }
 
-
-
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
-        $('.modal-body').text("Congratulations White Player!")
+        $('.modal-body').text("Congratulations White Player!");
     }
     else {
-        $('.modal-body').text("Congratulations Black Player!")
+        $('.modal-body').text("Congratulations Black Player!");
     }
     $('.playAgain').on("click", function () {
         $('#winModal').addClass("hide");
     })
+}
+
+function playerTurn(){
+    if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+    }
+    else{
+        $('#player2').text('Player 2 Turn').addClass("border");
+    }
 }
 
 var gameRound = true;
