@@ -274,14 +274,12 @@ function create_board(){
         $(".game_board_div").append(row);
     }
 }
-
-var playerOneScore = 0;
-var playerTwoScore = 0;
+var blackSquareCounter = 0;
+var whiteSquareCounter = 0;
 
 function display_stats() {
 
-    var blackSquareCounter = 0;
-    var whiteSquareCounter = 0;
+
     for (arrayRow = 0; arrayRow < 8; arrayRow++) {
         for (arrayCol = 0; arrayCol < 8; arrayCol++) {
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");

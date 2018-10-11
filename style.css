@@ -15,7 +15,7 @@ body {
 }
 .stats {
     background-color: lightskyblue;
-    width: 15%;
+    width: 10%;
     height: 100%;
     bottom: 0;
     left: 0;
@@ -27,6 +27,12 @@ body {
 
 a {
     font-size: smaller;
+    color: green;
+}
+
+.rules_div{
+    position: relative;
+    top: 5%;
 }
 
 .stats_title{
@@ -34,7 +40,8 @@ a {
     height: 10%;
     /*color: yellow;*/
     font-size: 50px;
-
+    position: relative;
+    top: 4%;
 }
 
 .whites_title, .whiteScore, .blacks_title, .blackScore{
@@ -54,7 +61,7 @@ a {
 
 .players {
     background-color: lightskyblue;
-    width: 15%;
+    width: 10%;
     height: 100%;
     bottom: 0;
     right: 0;
