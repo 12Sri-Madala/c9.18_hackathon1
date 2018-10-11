@@ -6,10 +6,16 @@ body {
     margin: 0;
     height: 100vh;
     width: 100vw;
-    background-color: white;
+    /*background-color: white;*/
+    background-image: url("images/city.png");
+    background-image: contain;
+    background-repeat: no-repeat;
+    position: relative;
+    background-size: 100% 100%;
+
 }
 .stats {
-    background-color: rosybrown;
+    /*background-color: rosybrown;*/
     width: 15%;
     height: 100%;
     bottom: 0;
@@ -17,18 +23,24 @@ body {
     position: absolute;
     text-align: center;
     font-size: 40px;
+    color: yellow;
 }
 
 
 .stats_title{
     width: 100%;
-    height: 10%
+    height: 10%;
+    /*color: yellow;*/
+    font-size: 50px;
+
 }
 
 .whites_title, .whiteScore, .blacks_title, .blackScore{
     width: 100%;
     height: 10%;
     text-align: center;
+    /*color: yellow;*/
+    /*font-size: ;*/
 }
 
 .resetBttn {
@@ -38,14 +50,22 @@ body {
 }
 
 .players {
-    background-color: mistyrose;
+    /*background-color: mistyrose;*/
     width: 15%;
     height: 100%;
     bottom: 0;
     right: 0;
     position: absolute;
     text-align: center;
-    font-size: 40px;
+    /*font-size: 50px;*/
+    /*color: yellow;*/
+}
+
+.stats_title, .whites_title, .whiteScore, .blacks_title, .blackScore, .players {
+    font-size: 50px;
+    color: black;
+    font-weight: bolder;
+
 }
 
 
@@ -59,14 +79,14 @@ body {
     width: 60%;
     margin: auto;
     height: 100%;
-    border: solid 1px #3A4655;
+    /*border: solid 1px #3A4655;*/
     font-size: 0;
 }
 
 .row {
     width: 100%;
     height: 25%;
-    background: green;
+    /*background: green;*/
 
 }
 
@@ -95,10 +115,11 @@ body {
     top: 10%;
 }
 
-@media only screen and (max-width: 900px) {
-    .square {
-        height: 35px;
-        width: 35px;
+@media only screen and (max-width: 100px) {
+    .game_board_div {
+        height: 50%;
+        width: 50%;
+
     }
 }
 
@@ -112,13 +133,13 @@ body {
      display: flex;
      justify-content: center;
      align-content: center;
-     background-color: white;
+     /*background-color: white;*/
  }
 
  .square {
      display: inline-block;
-     height: 85px;
-     width: 85px;
+     height: 65px;
+     width: 65px;
      border: 1px solid black;
      border-radius: 2px;
      background-color: green;
@@ -139,6 +160,7 @@ body {
     border-radius: 50%;
     background-color: black;
     border: 1px solid white;
+    margin: auto;
 }
 
 .winModal {
@@ -160,6 +182,6 @@ body {
     display: none;
 }
 
-.highlight{
-    border: 2px solid yellow;
-}
+/*.highlight{*/
+    /*border: 2px solid yellow;*/
+/*}*/
