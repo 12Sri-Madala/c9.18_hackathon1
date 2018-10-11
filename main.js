@@ -76,15 +76,17 @@ function create_board(){
         var row = $("<div>").addClass("row");
         for(var colIndex = 0; colIndex < game_board.length; colIndex ++){
             var square = $("<div>").addClass("square").attr("row", rowIndex).attr("col", colIndex);
+            if(game_board[rowIndex][colIndex] === 1){
+                var whiteSquare = $("<div>").addClass("whiteSquare");
+                square.append(whiteSquare);
+            } else if (game_board[rowIndex][colIndex] === 2){
+                var blackSquare = $("<div>").addClass("blackSquare");
+                square.append(blackSquare);
+            }
             row.append(square);
         }
-
         //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
-
-    $(game_board[3][3]).append()
-    $(game_board[3][4])
-    $(game_board[4][3])
-    $(game_board[4][4])
 }
+

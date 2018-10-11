@@ -103,10 +103,19 @@ body {
      background-color: green;
  }
 
- .white {
+ .whiteSquare {
+       height: 95%;
+       width: 95%;
+       border-radius: 50%;
+       background-color: white;
+       border: 1px solid black;
+       margin: auto;
+   }
 
- }
-
- .black {
-
- }
+.blackSquare {
+    height: 95%;
+    width: 95%;
+    border-radius: 50%;
+    background-color: black;
+    border: 1px solid white;
+}
