@@ -10,17 +10,12 @@ function initializeApp(){
 }
 
 function applyClicksOnSpaces() {
-    $(".highlight").click(test);
-    $(".highlight2").click(test);
-    applyClicksOnSpaces();
+    $(".highlight").click(flipCoins);
+    $(".highlight2").click(flipCoins);
     display_stats();
     playerTurn();
 }
 
-function applyClicksOnSpaces() {
-    $(".highlight").click(flipCoins);
-    $(".resetBttn").click(reset_game_bttn);
-}
 
 function determineWinner(whiteScore, blackScore){
     if (whiteScore > blackScore){
@@ -54,6 +49,8 @@ function playerTurn(){
 }
 
 var gameRound = true;
+// var coinsToFlip = null;
+
 function startGame(){
     if (gameRound === true){
         player1AvailableSpaces();
@@ -68,7 +65,6 @@ function startGame(){
 function player1AvailableSpaces(){
     console.log("hii from player 1 available spaces")
     for (arrayRow = 0; arrayRow<8; arrayRow++){
-        debugger;
         for (arrayCol = 0; arrayCol<8; arrayCol++){
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
             var currentPlayerContents = currentPlayer1GameSquare.find('div');
@@ -80,7 +76,8 @@ function player1AvailableSpaces(){
                         var adjacentPlayerContents = adjacentPlayer1Square.find('div');
                         if (adjacentPlayerContents.hasClass("whiteSquare")){
                             while (adjacentPlayer1Square.attr("row")>=0 && adjacentPlayer1Square.attr("row")<8 && adjacentPlayer1Square.attr("col")>=0 && adjacentPlayer1Square.attr("col")<8){
-                                currentPosition.x+=rowCoordinate; currentPosition.y+=colCoordinate;
+                                currentPosition.x+=rowCoordinate; 
+                                currentPosition.y+=colCoordinate;
                                 adjacentPlayer1Square = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
                                 adjacentPlayerContents = adjacentPlayer1Square.find('div');
                                 if (adjacentPlayerContents.hasClass("whiteSquare")){
@@ -105,7 +102,6 @@ function player1AvailableSpaces(){
 function player2AvailableSpaces(){
     console.log("I'm broken here");
     for (arrayRow = 0; arrayRow<8; arrayRow++){
-        debugger;
         for (arrayCol = 0; arrayCol<8; arrayCol++){
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
             var currentPlayerContents = currentPlayer1GameSquare.find('div');
@@ -117,7 +113,8 @@ function player2AvailableSpaces(){
                         var adjacentPlayerContents = adjacentPlayer1Square.find('div');
                         if (adjacentPlayerContents.hasClass("blackSquare")){
                             while (adjacentPlayer1Square.attr("row")>=0 && adjacentPlayer1Square.attr("row")<8 && adjacentPlayer1Square.attr("col")>=0 && adjacentPlayer1Square.attr("col")<8){
-                                currentPosition.x+=rowCoordinate; currentPosition.y+=colCoordinate;
+                                currentPosition.x+=rowCoordinate; 
+                                currentPosition.y+=colCoordinate;
                                 adjacentPlayer1Square = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
                                 adjacentPlayerContents = adjacentPlayer1Square.find('div');
                                 if (adjacentPlayerContents.hasClass("blackSquare")){
@@ -142,36 +139,39 @@ function player2AvailableSpaces(){
 function flipCoins(){
     var currentPlacedCoin = $(event.currentTarget);
     if (gameRound){
-        currentPlacedCoin.addClass("blackSquare");                                    
+        currentPlacedCoin.addClass("blackSquare");
+        $('.highlight2').off();
+        $(".highlight2").removeClass("highlight2");                                   
         for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
             for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
-                var placedCoinRow = currentPlacedCoin.getAttribute("row");
-                var placedCoinCol = currentPlacedCoin.getAttribute("col");
-                var adjacentToCurrent = currentPlacedCoin["row = " + (placedCoinRow + rowCoordinate) + "][col = " + (placedCoinCol + colCoordinate)];
-                if (adjacentToCurrent.hasClass("whiteSquare")){
-                    while (adjacentToCurrent.getAttribute("row")>=0 && adjacentToCurrent.getAttribute("row")<8 && adjacentToCurrent.getAttribute("col")>=0 && adjacentToCurrent.getAttribute("col")<8){
-                        var adjacentCoinRow = adjacentToCurrent.getAttribute("row");
-                        var adjacentCoinCol = adjacentToCurrent.getAttribute("col");
-                        adjacentToCurrent = adjacentToCurrent["row = " + (adjacentCoinRow + rowCoordinate) + "][col = " + (adjacentCoinCol + colCoordinate)];
-                        if (adjacentToCurrent.hasClass("whiteSquare")){
+                coinsToFlip = [];
+                var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
+                var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
+                var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
+                // $(".testing").removeClass("testing");
+                var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                // adjacentToCurrent.addClass("testing");
+                var adjCurrentContents = adjacentToCurrent.find('div');
+                if (adjCurrentContents.hasClass("whiteSquare")){
+                    coinsToFlip.push(adjCurrentContents);
+                    while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
+                        currentPosition.x+=rowCoordinate; 
+                        currentPosition.y+=colCoordinate;
+                        // $('.testing2').removeClass("testing2");
+                        adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        // adjacentToCurrent.addClass("testing2");
+                        adjCurrentContents = adjacentToCurrent.find('div');
+                        if (adjCurrentContents.hasClass("whiteSquare")){
+                            coinsToFlip.push(adjCurrentContents);
                             continue;
-                        } else if (adjacentToCurrent.hasClass("greenGameSquare")){
-                            break;
-                        } else if (adjacentToCurrent.hasClass("blackSquare")){
-                            var flipRowCoordinate = rowCoordinate * -1;
-                            var flipColCoordinate = colCoordinate * -1;
-                            var finalCoinToFlip = adjacentToCurrent;
-                            for (flipCoinInd = 0; flipCoinInd<6; flipCoinInd++){
-                            var finalCoinRow = finalCoinToFlip.getAttribute("row");
-                            var finalCoinCol = finalCoinToFlip.getAttribute("col");
-                            finalCoinToFlip = finalCoinToFlip["row = " + (finalCoinRow + flipRowCoordinate) + "][col = " + (finalCoinCol + flipColCoordinate)];
-                                if(finalCoinToFlip.hasClass("whiteSquare")){
-                                    finalCoinToFlip.removeClass("whiteSquare");
-                                    finalCoinToFlip.addClass("blackSquare");
-                                } else if (finalCoinToFlip === undefined){
-                                    break;
-                                }
+                        }  else if (adjCurrentContents.hasClass("blackSquare")){
+                            for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+                                coinsToFlip[flipCoinInd].removeClass("whiteSquare");
+                                coinsToFlip[flipCoinInd].addClass("blackSquare")
                             }
+                            break;
+                        }else if (adjCurrentContents.hasClass("blankSquare")){
+                            break;
                         }
                     }
                 } 
@@ -179,43 +179,60 @@ function flipCoins(){
         } 
     } else {
         currentPlacedCoin.addClass("whiteSquare");
+        $('.highlight').off();
+        $(".highlight").removeClass("highlight");                                   
         for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
             for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
-                var placedCoinRow = currentPlacedCoin.getAttribute("row");
-                var placedCoinCol = currentPlacedCoin.getAttribute("col");
-                var adjacentToCurrent = currentPlacedCoin["row = " + (placedCoinRow + rowCoordinate) + "][col = " + (placedCoinCol + colCoordinate)];
-                if (adjacentToCurrent.hasClass("blackSquare")){
-                    while (adjacentToCurrent.getAttribute("row")>=0 && adjacentToCurrent.getAttribute("row")<8 && adjacentToCurrent.getAttribute("col")>=0 && adjacentToCurrent.getAttribute("col")<8){
-                        var adjacentCoinRow = adjacentToCurrent.getAttribute("row");
-                        var adjacentCoinCol = adjacentToCurrent.getAttribute("col");
-                        adjacentToCurrent = adjacentToCurrent["row = " + (adjacentCoinRow + rowCoordinate) + "][col = " + (adjacentCoinCol + colCoordinate)];
-                        if (adjacentToCurrent.hasClass("blackSquare")){
+                coinsToFlip = [];
+                var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
+                var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
+                var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
+                // $(".testing").removeClass("testing");
+                var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                // adjacentToCurrent.addClass("testing");
+                var adjCurrentContents = adjacentToCurrent.find('div');
+                if (adjCurrentContents.hasClass("blackSquare")){
+                    coinsToFlip.push(adjCurrentContents);
+                    while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
+                        currentPosition.x+=rowCoordinate; 
+                        currentPosition.y+=colCoordinate;
+                        // $('.testing2').removeClass("testing2");
+                        adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        // adjacentToCurrent.addClass("testing2");
+                        adjCurrentContents = adjacentToCurrent.find('div');
+                        if (adjCurrentContents.hasClass("blackSquare")){
+                            coinsToFlip.push(adjCurrentContents);
                             continue;
-                        } else if (adjacentToCurrent.hasClass("greenGameSquare")){
-                            break;
-                        } else if (adjacentToCurrent.hasClass("whiteSquare")){
-                            var flipRowCoordinate = rowCoordinate * -1;
-                            var flipColCoordinate = colCoordinate * -1;
-                            var finalCoinToFlip = adjacentToCurrent;
-                            for (flipCoinInd = 0; flipCoinInd<6; flipCoinInd++){
-                            var finalCoinRow = finalCoinToFlip.getAttribute("row");
-                            var finalCoinCol = finalCoinToFlip.getAttribute("col");
-                            finalCoinToFlip = finalCoinToFlip["row = " + (finalCoinRow + flipRowCoordinate) + "][col = " + (finalCoinCol + flipColCoordinate)];
-                                if(finalCoinToFlip.hasClass("blackSquare")){
-                                    finalCoinToFlip.removeClass("blackSquare");
-                                    finalCoinToFlip.addClass("whiteSquare");
-                                } else if (finalCoinToFlip === undefined){
-                                    break;
-                                }
+                        } else if (adjCurrentContents.hasClass("whiteSquare")){
+                            for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+                                coinsToFlip[flipCoinInd].removeClass("blackSquare");
+                                coinsToFlip[flipCoinInd].addClass("whiteSquare")
                             }
-                        }
+                            break;
+                        } else if (adjCurrentContents.hasClass("blankSquare")){
+                            break;
+                        } 
                     }
-                } 
+                }
             } 
         } 
     }
+        gameRound = !gameRound; 
+        startGame();
+    }
 
-    gameRound = !gameRound;
+function p1coinsInArray(){
+    for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+        coinsToFlip[flipCoinInd].removClass("whiteSquare");
+        coinsToFlip[flipCoinInd].addClass("blackSquare")
+    }
+}
+
+function p2coinsInArray(){
+    for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+        coinsToFlip[flipCoinInd].removClass("blackSquare");
+        coinsToFlip[flipCoinInd].addClass("whiteSquare")
+    }
 }
 
 function test(){
@@ -251,10 +268,12 @@ function create_board(){
         for(var colIndex = 0; colIndex < game_board.length; colIndex ++){
             var square = $("<div>").addClass("square").attr("row", rowIndex).attr("col", colIndex);
             if(game_board[rowIndex][colIndex] === 1){
-                var whiteSquare = $("<div>").addClass("whiteSquare");
+               
+                var whiteSquare = $("<div>").addClass("blankSquare whiteSquare");
                 square.append(whiteSquare);
             } else if (game_board[rowIndex][colIndex] === 2){
-                var blackSquare = $("<div>").addClass("blackSquare");
+           
+                var blackSquare = $("<div>").addClass("blankSquare blackSquare");
                 square.append(blackSquare);
             } else if (game_board[rowIndex][colIndex] === 0 ){
                 var greenSquare = $("<div>").addClass("blankSquare");
