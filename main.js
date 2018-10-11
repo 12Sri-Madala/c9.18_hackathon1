@@ -64,8 +64,8 @@ var game_board = [
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
+    [0,0,0,1,2,0,0,0],
+    [0,0,0,2,1,0,0,0],
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0]
@@ -80,6 +80,11 @@ function create_board(){
         }
 
         //add class name between quotes. Maybe .game_area?
-        $("").append(row);
+        $(".game_board_div").append(row);
     }
+
+    $(game_board[3][3]).append()
+    $(game_board[3][4])
+    $(game_board[4][3])
+    $(game_board[4][4])
 }
