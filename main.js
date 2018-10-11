@@ -4,15 +4,16 @@ function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
 
-    display_stats(); 
-    $(".resetBtn").click(reset_game_bttn);
+    display_stats();
+    $(".resetBttn").click(reset_game_bttn);
+  
     startGame();
 }
 
 function applyClicksOnSpaces() {
     $(".highlight").click(test);
     $(".highlight2").click(test);
-    applyClicksOnSpaces();
+    playerTurn();
     display_stats();
 }
 
@@ -59,6 +60,7 @@ function startGame(){
 function player1AvailableSpaces(){
     console.log("hii from player 1 available spaces")
     for (arrayRow = 0; arrayRow<8; arrayRow++){
+
         for (arrayCol = 0; arrayCol<8; arrayCol++){
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
             var currentPlayerContents = currentPlayer1GameSquare.find('div');
@@ -165,7 +167,7 @@ function flipCoins(){
                         }
                     }
                 } 
-            } 
+            }
         } 
     } else {
         currentPlacedCoin.addClass("whiteSquare");
@@ -204,23 +206,28 @@ function flipCoins(){
             } 
         } 
     }
-
     gameRound = !gameRound;
 }
 
 function test(){
+
     var currentPlacedCoin = $(event.currentTarget);
     if (gameRound === true){
+
         currentPlacedCoin.addClass("blackSquare");
         $('.highlight2').off();
         $(".highlight2").removeClass("highlight2");
+        display_stats()
     } else if(gameRound === false){
+
         currentPlacedCoin.addClass("whiteSquare");
         $('.highlight').off();
         $(".highlight").removeClass("highlight");
+        display_stats()
     }
     gameRound = !gameRound;
-    startGame();  
+    startGame();
+
 }
       
 var game_board = [
@@ -252,20 +259,30 @@ function create_board(){
             }
             row.append(square);
         }
-        //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
 }
 
-
-
-
 var playerOneScore = 0;
 var playerTwoScore = 0;
 
-function display_stats(){
-    $(".whiteScore").text();
-    $(".blackScore").text();
+function display_stats() {
+
+    var blackSquareCounter = 0;
+    var whiteSquareCounter = 0;
+    for (arrayRow = 0; arrayRow < 8; arrayRow++) {
+        for (arrayCol = 0; arrayCol < 8; arrayCol++) {
+            var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
+            var currentPlayerContents = currentPlayer1GameSquare.find('div');
+            if (currentPlayerContents.hasClass("blackSquare")) {
+                blackSquareCounter++;
+                $(".blackScore").text(blackSquareCounter);
+            } else if (currentPlayerContents.hasClass("whiteSquare")){
+                whiteSquareCounter++;
+                $(".whiteScore").text(whiteSquareCounter);
+            }
+        }
+    }
 }
 
 function reset_game_bttn(){
