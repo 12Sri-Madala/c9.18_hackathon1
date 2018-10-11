@@ -3,11 +3,11 @@ $(document).ready(initializeApp);
 function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
-    applyClickHandlers();
+    applyClicksOnSpaces();
     display_stats();
 }
 
-function applyClickHandlers() {
+function applyClicksOnSpaces() {
     $(".highlight").click(flipCoins);
     $(".resetBttn").click(reset_game_bttn);
 }
@@ -38,15 +38,16 @@ function showModal(color) {
 
 var gameRound = true;
 
-if (gameRound === true){
-    player1AvailableSpaces();
-    applyClicksOnSpaces();
-}
 
-if (gameRound === false){
-    player2AvailableSpaces();
-    applyClicksOnSpaces();
-}
+    if (gameRound === true) {
+        console.log("hiii");
+        player1AvailableSpaces();
+        applyClicksOnSpaces();
+    } else {
+        player2AvailableSpaces();
+        applyClicksOnSpaces();
+    }
+
 
 
 function player1AvailableSpaces(){
@@ -198,7 +199,6 @@ function create_board(){
         var row = $("<div>").addClass("row");
         for(var colIndex = 0; colIndex < game_board.length; colIndex ++){
             var square = $("<div>").addClass("square").attr("row", rowIndex).attr("col", colIndex);
-
             if(game_board[rowIndex][colIndex] === 1){
                 var whiteSquare = $("<div>").addClass("whiteSquare");
                 square.append(whiteSquare);
@@ -208,12 +208,10 @@ function create_board(){
             }
             row.append(square);
         }
+        //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
 }
-
-
-
 
 var playerOneScore = 0;
 var playerTwoScore = 0;

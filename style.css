@@ -159,3 +159,7 @@ body {
 .hide{
     display: none;
 }
+
+.highlight{
+    border: 2px solid yellow;
+}
