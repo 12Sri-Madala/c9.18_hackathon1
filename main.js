@@ -14,11 +14,26 @@ function applyClickHandlers() {
 
 function determineWinner(whiteCount, blackCount){
     if (whiteCount > blackCount){
-        alert("Player 1 Wins!!!")
+        showModal("white");
     }
     else{
-        alert("Player 2 Wins!!!")
+        showModal("black");
     }
+}
+
+
+
+function showModal(color) {
+    $('#winModal').removeClass("hide");
+    if (color === "white") {
+        $('.modal-body').text("Congratulations White Player!")
+    }
+    else {
+        $('.modal-body').text("Congratulations Black Player!")
+    }
+    $('.playAgain').on("click", function () {
+        $('#winModal').addClass("hide");
+    })
 }
 
 function player1AvailableSpaces(){
@@ -107,6 +122,7 @@ function create_board(){
 }
 
 
+
 var playerOneScore = 0;
 var playerTwoScore = 0;
 
@@ -118,5 +134,6 @@ function display_stats(){
 function reset_game_bttn(){
     
 }
+
 
 
