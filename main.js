@@ -3,8 +3,7 @@ $(document).ready(initializeApp);
 function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
-
-    display_stats(); 
+    display_stats();
     $(".resetBttn").click(reset_game_bttn);
     startGame();
 }
@@ -12,15 +11,10 @@ function initializeApp(){
 function applyClicksOnSpaces() {
     $(".highlight").click(test);
     $(".highlight2").click(test);
-    applyClicksOnSpaces();
-    display_stats();
+
     playerTurn();
 }
 
-function applyClicksOnSpaces() {
-    $(".highlight").click(flipCoins);
-    $(".resetBttn").click(reset_game_bttn);
-}
 
 function determineWinner(whiteScore, blackScore){
     if (whiteScore > blackScore){
@@ -68,7 +62,7 @@ function startGame(){
 function player1AvailableSpaces(){
     console.log("hii from player 1 available spaces")
     for (arrayRow = 0; arrayRow<8; arrayRow++){
-        debugger;
+
         for (arrayCol = 0; arrayCol<8; arrayCol++){
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
             var currentPlayerContents = currentPlayer1GameSquare.find('div');
@@ -175,7 +169,7 @@ function flipCoins(){
                         }
                     }
                 } 
-            } 
+            }
         } 
     } else {
         currentPlacedCoin.addClass("whiteSquare");
@@ -214,23 +208,28 @@ function flipCoins(){
             } 
         } 
     }
-
     gameRound = !gameRound;
 }
 
 function test(){
+
     var currentPlacedCoin = $(event.currentTarget);
     if (gameRound === true){
+
         currentPlacedCoin.addClass("blackSquare");
         $('.highlight2').off();
         $(".highlight2").removeClass("highlight2");
+        display_stats()
     } else if(gameRound === false){
+
         currentPlacedCoin.addClass("whiteSquare");
         $('.highlight').off();
         $(".highlight").removeClass("highlight");
+        display_stats()
     }
     gameRound = !gameRound;
-    startGame();  
+    startGame();
+
 }
       
 var game_board = [
@@ -267,16 +266,44 @@ function create_board(){
     }
 }
 
-
-
-
 var playerOneScore = 0;
 var playerTwoScore = 0;
 
-function display_stats(){
-    $(".whiteScore").text();
-    $(".blackScore").text();
+function display_stats() {
+
+    // for (var rowIndex = 0; rowIndex < game_board.length; rowIndex++) {
+    //     for (var colIndex = 0; colIndex < game_board.length; colIndex++) {
+    //         if(game_board[rowIndex][colIndex] ){
+    //             playerOneScore++;
+    //         } else if (game_board[rowIndex][colIndex] === 2){
+    //             playerTwoScore++;
+    //         }
+    //     }
+    // }
+    var blackSquareCounter = 0;
+    var whiteSquareCounter = 0;
+
+    for (arrayRow = 0; arrayRow < 8; arrayRow++) {
+
+        for (arrayCol = 0; arrayCol < 8; arrayCol++) {
+            var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
+            var currentPlayerContents = currentPlayer1GameSquare.find('div');
+            if (currentPlayerContents.hasClass("blackSquare")) {
+                blackSquareCounter++;
+                $(".blackScore").text(blackSquareCounter);
+            } else if (currentPlayerContents.hasClass("whiteSquare")){
+                whiteSquareCounter++;
+                $(".whiteScore").text(whiteSquareCounter);
+            }
+        }
+    }
+
+
 }
+// function display_stats(){
+//     $(".whiteScore").text(playerTwoScore);
+//     $(".blackScore").text(playerOneScore);
+// }
 
 function reset_game_bttn(){
     
