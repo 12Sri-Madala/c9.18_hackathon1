@@ -1,18 +1,24 @@
-
-function determineWinner(whiteCount, blackCount){
-    if (whiteCount > blackCount){
-    alert("Player 1 Wins!!!")
-    }
-    else{
-    alert("Player 2 Wins!!!")
-    }
-}
-
 $(document).ready(initializeApp);
 
 function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
+    applyClickHandlers();
+    display_stats();
+}
+
+function applyClickHandlers() {
+    $(".highlight").click(flipCoins);
+    $(".resetBttn").click(reset_game_bttn);
+}
+
+function determineWinner(whiteCount, blackCount){
+    if (whiteCount > blackCount){
+        alert("Player 1 Wins!!!")
+    }
+    else{
+        alert("Player 2 Wins!!!")
+    }
 }
 
 function player1AvailableSpaces(){
@@ -86,6 +92,7 @@ function create_board(){
         var row = $("<div>").addClass("row");
         for(var colIndex = 0; colIndex < game_board.length; colIndex ++){
             var square = $("<div>").addClass("square").attr("row", rowIndex).attr("col", colIndex);
+
             if(game_board[rowIndex][colIndex] === 1){
                 var whiteSquare = $("<div>").addClass("whiteSquare");
                 square.append(whiteSquare);
@@ -95,9 +102,21 @@ function create_board(){
             }
             row.append(square);
         }
-        //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
+}
+
+
+var playerOneScore = 0;
+var playerTwoScore = 0;
+
+function display_stats(){
+    $(".whiteScore").text();
+    $(".blackScore").text();
+}
+
+function reset_game_bttn(){
+    
 }
 
 
