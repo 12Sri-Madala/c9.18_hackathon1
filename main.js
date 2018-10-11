@@ -5,7 +5,7 @@ function initializeApp(){
     create_board();
 
     display_stats(); 
-    $(".resetBttn").click(reset_game_bttn);
+    $(".resetBtn").click(reset_game_bttn);
     startGame();
 }
 
@@ -14,13 +14,8 @@ function applyClicksOnSpaces() {
     $(".highlight2").click(test);
     applyClicksOnSpaces();
     display_stats();
-    playerTurn();
 }
 
-function applyClicksOnSpaces() {
-    $(".highlight").click(flipCoins);
-    $(".resetBttn").click(reset_game_bttn);
-}
 
 function determineWinner(whiteScore, blackScore){
     if (whiteScore > blackScore){
@@ -34,31 +29,27 @@ function determineWinner(whiteScore, blackScore){
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
-        $('.modal-body').text("Congratulations White Player!");
+        $('.modal-body').text("Congratulations Player 1!");
     }
     else {
-        $('.modal-body').text("Congratulations Black Player!");
+        $('.modal-body').text("Congratulations Player 2!");
     }
     $('.playAgain').on("click", function () {
         $('#winModal').addClass("hide");
     })
 }
 
-function playerTurn(){
-    if (gameRound === true){
-        $('#player1').text('Player 1 Turn').addClass("border");
-    }
-    else{
-        $('#player2').text('Player 2 Turn').addClass("border");
-    }
-}
 
 var gameRound = true;
 function startGame(){
     if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+        $('#player2').text('Player 2 Turn').removeClass("border");
         player1AvailableSpaces();
         applyClicksOnSpaces();
     } else {
+        $('#player1').text('Player 1 Turn').removeClass("border");
+        $('#player2').text('Player 2 Turn').addClass("border");
         player2AvailableSpaces();
         applyClicksOnSpaces();
     }
@@ -68,7 +59,6 @@ function startGame(){
 function player1AvailableSpaces(){
     console.log("hii from player 1 available spaces")
     for (arrayRow = 0; arrayRow<8; arrayRow++){
-        debugger;
         for (arrayCol = 0; arrayCol<8; arrayCol++){
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
             var currentPlayerContents = currentPlayer1GameSquare.find('div');
