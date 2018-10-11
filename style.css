@@ -37,7 +37,7 @@ body {
 .gameBoardBody {
     width: 60%;
     margin: auto;
-    height: 80%;
+    height: 100%;
     border: solid 1px #3A4655;
     font-size: 0;
 }
@@ -64,4 +64,58 @@ body {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
+}
+
+/* Below is CSS for game board */
+
+.game_board_container {
+    width: 100%;
+    position: relative;
+    top: 10%;
+}
+
+@media only screen and (max-width: 900px) {
+    .square {
+        height: 35px;
+        width: 35px;
+    }
+}
+
+ .game_board_div {
+     height: 100%;
+     width: 100%;
+
+ }
+
+ .row {
+     display: flex;
+     justify-content: center;
+     align-content: center;
+     background-color: white;
+ }
+
+ .square {
+     display: inline-block;
+     height: 85px;
+     width: 85px;
+     border: 1px solid black;
+     border-radius: 2px;
+     background-color: green;
+ }
+
+ .whiteSquare {
+       height: 95%;
+       width: 95%;
+       border-radius: 50%;
+       background-color: white;
+       border: 1px solid black;
+       margin: auto;
+   }
+
+.blackSquare {
+    height: 95%;
+    width: 95%;
+    border-radius: 50%;
+    background-color: black;
+    border: 1px solid white;
 }
