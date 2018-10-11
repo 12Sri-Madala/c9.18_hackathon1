@@ -14,7 +14,7 @@ body {
     background-size: 100% 100%;
 }
 .stats {
-    /*background-color: rosybrown;*/
+    background-color: lightskyblue;
     width: 15%;
     height: 100%;
     bottom: 0;
@@ -53,7 +53,7 @@ a {
 }
 
 .players {
-    /*background-color: mistyrose;*/
+    background-color: lightskyblue;
     width: 15%;
     height: 100%;
     bottom: 0;

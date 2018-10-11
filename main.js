@@ -3,16 +3,18 @@ $(document).ready(initializeApp);
 function initializeApp(){
     // insert functions here to run when DOM is loaded
     create_board();
+
     display_stats();
     $(".resetBttn").click(reset_game_bttn);
+  
     startGame();
 }
 
 function applyClicksOnSpaces() {
     $(".highlight").click(test);
     $(".highlight2").click(test);
-
     playerTurn();
+    display_stats();
 }
 
 
@@ -28,31 +30,27 @@ function determineWinner(whiteScore, blackScore){
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
-        $('.modal-body').text("Congratulations White Player!");
+        $('.modal-body').text("Congratulations Player 1!");
     }
     else {
-        $('.modal-body').text("Congratulations Black Player!");
+        $('.modal-body').text("Congratulations Player 2!");
     }
     $('.playAgain').on("click", function () {
         $('#winModal').addClass("hide");
     })
 }
 
-function playerTurn(){
-    if (gameRound === true){
-        $('#player1').text('Player 1 Turn').addClass("border");
-    }
-    else{
-        $('#player2').text('Player 2 Turn').addClass("border");
-    }
-}
 
 var gameRound = true;
 function startGame(){
     if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+        $('#player2').text('Player 2 Turn').removeClass("border");
         player1AvailableSpaces();
         applyClicksOnSpaces();
     } else {
+        $('#player1').text('Player 1 Turn').removeClass("border");
+        $('#player2').text('Player 2 Turn').addClass("border");
         player2AvailableSpaces();
         applyClicksOnSpaces();
     }
@@ -261,7 +259,6 @@ function create_board(){
             }
             row.append(square);
         }
-        //add class name between quotes. Maybe .game_area?
         $(".game_board_div").append(row);
     }
 }
@@ -271,20 +268,9 @@ var playerTwoScore = 0;
 
 function display_stats() {
 
-    // for (var rowIndex = 0; rowIndex < game_board.length; rowIndex++) {
-    //     for (var colIndex = 0; colIndex < game_board.length; colIndex++) {
-    //         if(game_board[rowIndex][colIndex] ){
-    //             playerOneScore++;
-    //         } else if (game_board[rowIndex][colIndex] === 2){
-    //             playerTwoScore++;
-    //         }
-    //     }
-    // }
     var blackSquareCounter = 0;
     var whiteSquareCounter = 0;
-
     for (arrayRow = 0; arrayRow < 8; arrayRow++) {
-
         for (arrayCol = 0; arrayCol < 8; arrayCol++) {
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
             var currentPlayerContents = currentPlayer1GameSquare.find('div');
@@ -297,13 +283,7 @@ function display_stats() {
             }
         }
     }
-
-
 }
-// function display_stats(){
-//     $(".whiteScore").text(playerTwoScore);
-//     $(".blackScore").text(playerOneScore);
-// }
 
 function reset_game_bttn(){
     
