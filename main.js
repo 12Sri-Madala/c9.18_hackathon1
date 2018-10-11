@@ -274,11 +274,11 @@ function create_board(){
         $(".game_board_div").append(row);
     }
 }
-var blackSquareCounter = 0;
-var whiteSquareCounter = 0;
+
 
 function display_stats() {
-
+    var blackSquareCounter = 0;
+    var whiteSquareCounter = 0;
 
     for (arrayRow = 0; arrayRow < 8; arrayRow++) {
         for (arrayCol = 0; arrayCol < 8; arrayCol++) {
