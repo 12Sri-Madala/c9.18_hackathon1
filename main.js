@@ -139,14 +139,18 @@ function flipCoins(){
                 var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
                 var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
                 var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
+                // $(".testing").removeClass("testing");
                 var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                // adjacentToCurrent.addClass("testing");
                 var adjCurrentContents = adjacentToCurrent.find('div');
                 if (adjCurrentContents.hasClass("whiteSquare")){
                     coinsToFlip.push(adjCurrentContents);
                     while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
                         currentPosition.x+=rowCoordinate;
                         currentPosition.y+=colCoordinate;
+                        // $(".testing2").removeClass("testing2");
                         adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        // adjacentToCurrent.addClass("testing2");
                         adjCurrentContents = adjacentToCurrent.find('div');
                         if (adjCurrentContents.hasClass("whiteSquare")){
                             coinsToFlip.push(adjCurrentContents);
