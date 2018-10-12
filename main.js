@@ -1,33 +1,29 @@
 $(document).ready(initializeApp);
 
 function initializeApp(){
-    // insert functions here to run when DOM is loaded
     create_board();
-
     display_stats();
-    $(".resetBttn").click(reset_game_bttn);
-  
+    $(".resetBtn").click(reset_game_bttn);
     startGame();
 }
 
 function applyClicksOnSpaces() {
-
     $(".highlight").click(flipCoins);
     $(".highlight2").click(flipCoins);
     display_stats();
-    playerTurn();
 }
 
-
+//Future feature set to work on
 function determineWinner(whiteScore, blackScore){
     if (whiteScore > blackScore){
-        showModal("white");
+        //showModal("white");
     }
     else{
-        showModal("black");
+        //showModal("black");
     }
 }
 
+//Future feature to work on
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
@@ -41,9 +37,7 @@ function showModal(color) {
     })
 }
 
-
 var gameRound = true;
-// var coinsToFlip = null;
 
 function startGame(){
     if (gameRound === true){
@@ -58,7 +52,6 @@ function startGame(){
         applyClicksOnSpaces();
     }
 }
-
 
 function player1AvailableSpaces(){
     console.log("hii from player 1 available spaces")
@@ -139,25 +132,21 @@ function flipCoins(){
     if (gameRound){
         currentPlacedCoin.addClass("blackSquare");
         $('.highlight2').off();
-        $(".highlight2").removeClass("highlight2");                                   
+        $(".highlight2").removeClass("highlight2");
         for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
             for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
                 coinsToFlip = [];
                 var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
                 var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
                 var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
-                // $(".testing").removeClass("testing");
                 var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
-                // adjacentToCurrent.addClass("testing");
                 var adjCurrentContents = adjacentToCurrent.find('div');
                 if (adjCurrentContents.hasClass("whiteSquare")){
                     coinsToFlip.push(adjCurrentContents);
                     while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
-                        currentPosition.x+=rowCoordinate; 
+                        currentPosition.x+=rowCoordinate;
                         currentPosition.y+=colCoordinate;
-                        // $('.testing2').removeClass("testing2");
                         adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
-                        // adjacentToCurrent.addClass("testing2");
                         adjCurrentContents = adjacentToCurrent.find('div');
                         if (adjCurrentContents.hasClass("whiteSquare")){
                             coinsToFlip.push(adjCurrentContents);
@@ -172,31 +161,27 @@ function flipCoins(){
                             break;
                         }
                     }
-                } 
+                }
             }
-        } 
+        }
     } else {
         currentPlacedCoin.addClass("whiteSquare");
         $('.highlight').off();
-        $(".highlight").removeClass("highlight");                                   
+        $(".highlight").removeClass("highlight");
         for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
             for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
                 coinsToFlip = [];
                 var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
                 var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
                 var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
-                // $(".testing").removeClass("testing");
                 var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
-                // adjacentToCurrent.addClass("testing");
                 var adjCurrentContents = adjacentToCurrent.find('div');
                 if (adjCurrentContents.hasClass("blackSquare")){
                     coinsToFlip.push(adjCurrentContents);
                     while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
-                        currentPosition.x+=rowCoordinate; 
+                        currentPosition.x+=rowCoordinate;
                         currentPosition.y+=colCoordinate;
-                        // $('.testing2').removeClass("testing2");
                         adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
-                        // adjacentToCurrent.addClass("testing2");
                         adjCurrentContents = adjacentToCurrent.find('div');
                         if (adjCurrentContents.hasClass("blackSquare")){
                             coinsToFlip.push(adjCurrentContents);
@@ -209,37 +194,16 @@ function flipCoins(){
                             break;
                         } else if (adjCurrentContents.hasClass("blankSquare")){
                             break;
-                        } 
+                        }
                     }
                 }
-            } 
-        } 
+            }
+        }
     }
-        gameRound = !gameRound; 
+        gameRound = !gameRound;
         startGame();
     }
 
-function test(){
-
-    var currentPlacedCoin = $(event.currentTarget);
-    if (gameRound === true){
-
-        currentPlacedCoin.addClass("blackSquare");
-        $('.highlight2').off();
-        $(".highlight2").removeClass("highlight2");
-        display_stats()
-    } else if(gameRound === false){
-
-        currentPlacedCoin.addClass("whiteSquare");
-        $('.highlight').off();
-        $(".highlight").removeClass("highlight");
-        display_stats()
-    }
-    gameRound = !gameRound;
-    startGame();
-
-}
-      
 var game_board = [
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
@@ -258,7 +222,6 @@ function create_board(){
         for(var colIndex = 0; colIndex < game_board.length; colIndex ++){
             var square = $("<div>").addClass("square").attr("row", rowIndex).attr("col", colIndex);
             if(game_board[rowIndex][colIndex] === 1){
-               
                 var whiteSquare = $("<div>").addClass("blankSquare whiteSquare");
                 square.append(whiteSquare);
             } else if (game_board[rowIndex][colIndex] === 2){
@@ -275,11 +238,9 @@ function create_board(){
     }
 }
 
-
 function display_stats() {
     var blackSquareCounter = 0;
     var whiteSquareCounter = 0;
-
     for (arrayRow = 0; arrayRow < 8; arrayRow++) {
         for (arrayCol = 0; arrayCol < 8; arrayCol++) {
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
@@ -296,8 +257,8 @@ function display_stats() {
 }
 
 function reset_game_bttn(){
-    
+    $(".game_board_div").empty();
+    create_board();
+    gameRound = true;
+    startGame();
 }
-
-
-
