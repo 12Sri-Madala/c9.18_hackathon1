@@ -5,6 +5,7 @@ function initializeApp(){
     display_stats();
     $(".resetBtn").click(reset_game_bttn);
     startGame();
+    $(".vsComp").click(startComputerGame);
 }
 
 //Future feature set to work on
@@ -32,13 +33,13 @@ function showModal(color) {
 }
 
 var gameRound = true;
-var storePossibleMoves = [];
 
 function applyClicksOnSpaces() {
     $(".highlight").click(flipCoins);
     $(".highlight2").click(flipCoins);
     display_stats();
 }
+
 
 function startGame(){
     if (gameRound === true){
@@ -51,20 +52,6 @@ function startGame(){
         $('#player2').text('Player 2 Turn').addClass("border");
         player2AvailableSpaces();
         applyClicksOnSpaces();
-    }
-}
-
-function startComputerGame(){
-    if (gameRound === true){
-        $('#player1').text('Player 1 Turn').addClass("border");
-        $('#player2').text('Computer').removeClass("border");
-        player1AvailableSpaces();
-        applyClicksOnSpaces();
-    } else {
-        $('#player1').text('Player 1 Turn').removeClass("border");
-        $('#player2').text('Computer').addClass("border");
-        player2AvailableSpaces();
-        display_stats();
     }
 }
 
@@ -224,6 +211,8 @@ function flipCoins(){
         startGame();
     }
 
+////////////////////////////////PLAYER 1 V 1 ////////////////////////////////////
+
 var game_board = [
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0],
@@ -234,7 +223,6 @@ var game_board = [
     [0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0]
 ];
-
 
 function create_board(){
     for(var rowIndex =0; rowIndex < game_board.length; rowIndex++){
@@ -283,54 +271,207 @@ function reset_game_bttn(){
     startGame();
 }
 
-function vsComputer(){
-    var randomNumber = null;
-    randomNumber = parseInt(Math.random()*storePossibleMoves.length);
-    storePossibleMoves[randomNumber].addClass("whiteSquare")
-    gameRound = !gameRound;
-    startComputerGame();
-    // store higlighted spaces of player 2 in an array
-    // randomize array to select one 
-    // place player 2 tile on randomized square
-    // change gameRound
+//////////////////////////////// VS COMPUTER ////////////////////////////////////
+
+// start of game
+// game round 1 
+// black player spaces are shown
+// black player places coin
+// white coins are flipped 
+// white available spaces 
+// store higlighted spaces of white in an array
+// randomize array to select one 
+// place white tile on randomized square
+// black coins are flipped
+// repeat: call start game 
+
+var storePossibleMoves = [];
+// $(".vsComp").click(startComputerGame);
+
+function startComputerGame(){
+    if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+        $('#player2').text('Computer').removeClass("border");
+        player1AvailableSpacesComputer();
+        applyClicksOnSpacesComputer();
+    } else {
+        $('#player1').text('Player 1 Turn').removeClass("border");
+        $('#player2').text('Computer').addClass("border");
+        player2AvailableSpacesComputer();
+        computerFlipCoins();
+        display_stats();
+    }
+    console.log("Hi from start computer game");
 }
 
-function computerFlipCoins(){
-    currentPlacedCoin.addClass("whiteSquare");
-    $('.highlight').off();
-    $(".highlight").removeClass("highlight");
-    for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
-        for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
-            coinsToFlip = [];
-            var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
-            var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
-            var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
-            var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
-            var adjCurrentContents = adjacentToCurrent.find('div');
-            if (adjCurrentContents.hasClass("blackSquare")){
-                coinsToFlip.push(adjCurrentContents);
-                while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
-                    currentPosition.x+=rowCoordinate;
-                    currentPosition.y+=colCoordinate;
-                    adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
-                    adjCurrentContents = adjacentToCurrent.find('div');
-                    if (adjCurrentContents.hasClass("blackSquare")){
-                        coinsToFlip.push(adjCurrentContents);
-                        continue;
-                    } else if (adjCurrentContents.hasClass("whiteSquare")){
-                        for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
-                            coinsToFlip[flipCoinInd].removeClass("blackSquare");
-                            coinsToFlip[flipCoinInd].addClass("whiteSquare")
+function applyClicksOnSpacesComputer() {
+    // $(".highlight").click(computerFlipCoins);
+    $(".highlight2").click(computerFlipCoins);
+    display_stats();
+    console.log("Hi from apply clicks on spaces computer");
+}
+
+
+function player1AvailableSpacesComputer(){
+    console.log("hii from player 1 Computer available spaces");
+    for (arrayRow = 0; arrayRow<8; arrayRow++){
+        for (arrayCol = 0; arrayCol<8; arrayCol++){
+            var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
+            var currentPlayerContents = currentPlayer1GameSquare.find('div');
+            if ( currentPlayerContents.hasClass("blackSquare") ){
+                for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
+                    for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
+                        var currentPosition = { x: arrayRow + rowCoordinate, y: arrayCol + colCoordinate};
+                        var adjacentPlayer1Square = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        var adjacentPlayerContents = adjacentPlayer1Square.find('div');
+                        if (adjacentPlayerContents.hasClass("whiteSquare")){
+                            while (adjacentPlayer1Square.attr("row")>=0 && adjacentPlayer1Square.attr("row")<8 && adjacentPlayer1Square.attr("col")>=0 && adjacentPlayer1Square.attr("col")<8){
+                                currentPosition.x+=rowCoordinate; 
+                                currentPosition.y+=colCoordinate;
+                                adjacentPlayer1Square = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                                adjacentPlayerContents = adjacentPlayer1Square.find('div');
+                                if (adjacentPlayerContents.hasClass("whiteSquare")){
+                                    continue;
+                                } else if (adjacentPlayerContents.hasClass("blackSquare")){
+                                    break;
+                                } else if (adjacentPlayer1Square.hasClass("square")){
+                                    adjacentPlayerContents.addClass("highlight2");
+                                    break;
+                                }else if (adjacentPlayer1Square === undefined){
+                                    break;
+                                }
+                            } 
                         }
-                        break;
-                    } else if (adjCurrentContents.hasClass("blankSquare")){
-                        break;
                     }
                 }
             }
         }
     }
-    gameRound = !gameRound;
-    startGame();
+}
+
+function player2AvailableSpacesComputer(){
+    console.log("Hi from player 2 available spaces computer")
+    for (arrayRow = 0; arrayRow<8; arrayRow++){
+        for (arrayCol = 0; arrayCol<8; arrayCol++){
+            var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
+            var currentPlayerContents = currentPlayer1GameSquare.find('div');
+            if ( currentPlayerContents.hasClass("whiteSquare") ){
+                for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
+                    for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
+                        var currentPosition = { x: arrayRow + rowCoordinate, y: arrayCol + colCoordinate};
+                        var adjacentPlayer1Square = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        var adjacentPlayerContents = adjacentPlayer1Square.find('div');
+                        if (adjacentPlayerContents.hasClass("blackSquare")){
+                            while (adjacentPlayer1Square.attr("row")>=0 && adjacentPlayer1Square.attr("row")<8 && adjacentPlayer1Square.attr("col")>=0 && adjacentPlayer1Square.attr("col")<8){
+                                currentPosition.x+=rowCoordinate; 
+                                currentPosition.y+=colCoordinate;
+                                adjacentPlayer1Square = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                                adjacentPlayerContents = adjacentPlayer1Square.find('div');
+                                if (adjacentPlayerContents.hasClass("blackSquare")){
+                                    continue;
+                                } else if (adjacentPlayerContents.hasClass("whiteSquare")){
+                                    break;
+                                } else if (adjacentPlayer1Square.hasClass("square")){
+                                    storePossibleMoves.push(adjacentPlayerContents)
+                                    adjacentPlayerContents.addClass("highlight");
+                                    break;
+                                }else if (adjacentPlayer1Square === undefined){
+                                    break;
+                                }
+                            } 
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+function computerFlipCoins(){
+    console.log("hi from computer flip coins");
+    if (gameRound){
+        var currentPlacedCoin = $(event.currentTarget);
+        currentPlacedCoin.addClass("blackSquare");
+        $('.highlight2').off();
+        $(".highlight2").removeClass("highlight2");
+        for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
+            for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
+                coinsToFlip = [];
+                var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
+                var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
+                var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
+                // $(".testing").removeClass("testing");
+                var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                // adjacentToCurrent.addClass("testing");
+                var adjCurrentContents = adjacentToCurrent.find('div');
+                if (adjCurrentContents.hasClass("whiteSquare")){
+                    coinsToFlip.push(adjCurrentContents);
+                    while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
+                        currentPosition.x+=rowCoordinate;
+                        currentPosition.y+=colCoordinate;
+                        // $(".testing2").removeClass("testing2");
+                        adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        // adjacentToCurrent.addClass("testing2");
+                        adjCurrentContents = adjacentToCurrent.find('div');
+                        if (adjCurrentContents.hasClass("whiteSquare")){
+                            coinsToFlip.push(adjCurrentContents);
+                            continue;
+                        }  else if (adjCurrentContents.hasClass("blackSquare")){
+                            for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+                                coinsToFlip[flipCoinInd].removeClass("whiteSquare");
+                                coinsToFlip[flipCoinInd].addClass("blackSquare")
+                            }
+                            break;
+                        }else if (adjCurrentContents.hasClass("blankSquare")){
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    } else {
+        var randomNumber = null;
+        randomNumber = parseInt(Math.random()*storePossibleMoves.length);
+        var randomMove = storePossibleMoves[randomNumber];
+        $(randomMove).addClass("whiteSquare");
+        $(".testing").removeClass("testing");
+        $(randomMove).parent().addClass("testing");
+        storePossibleMoves = [];
+        $('.highlight').off();
+        $(".highlight").removeClass("highlight");
+        for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
+            for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
+                coinsToFlip = [];
+                var placedCoinRow = parseInt(randomMove.parent().attr("row"));
+                var placedCoinCol = parseInt(randomMove.parent().attr("col"));
+                var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
+                var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                var adjCurrentContents = adjacentToCurrent.find('div');
+                if (adjCurrentContents.hasClass("blackSquare")){
+                    coinsToFlip.push(adjCurrentContents);
+                    while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
+                        currentPosition.x+=rowCoordinate;
+                        currentPosition.y+=colCoordinate;
+                        adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                        adjCurrentContents = adjacentToCurrent.find('div');
+                        if (adjCurrentContents.hasClass("blackSquare")){
+                            coinsToFlip.push(adjCurrentContents);
+                            continue;
+                        } else if (adjCurrentContents.hasClass("whiteSquare")){
+                            for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+                                coinsToFlip[flipCoinInd].removeClass("blackSquare");
+                                coinsToFlip[flipCoinInd].addClass("whiteSquare")
+                            }
+                            break;
+                        } else if (adjCurrentContents.hasClass("blankSquare")){
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+        gameRound = !gameRound;
+        startComputerGame();
 }
     
