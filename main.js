@@ -7,12 +7,6 @@ function initializeApp(){
     startGame();
 }
 
-function applyClicksOnSpaces() {
-    $(".highlight").click(flipCoins);
-    $(".highlight2").click(flipCoins);
-    display_stats();
-}
-
 //Future feature set to work on
 function determineWinner(whiteScore, blackScore){
     if (whiteScore > blackScore){
@@ -38,6 +32,13 @@ function showModal(color) {
 }
 
 var gameRound = true;
+var storePossibleMoves = [];
+
+function applyClicksOnSpaces() {
+    $(".highlight").click(flipCoins);
+    $(".highlight2").click(flipCoins);
+    display_stats();
+}
 
 function startGame(){
     if (gameRound === true){
@@ -50,6 +51,20 @@ function startGame(){
         $('#player2').text('Player 2 Turn').addClass("border");
         player2AvailableSpaces();
         applyClicksOnSpaces();
+    }
+}
+
+function startComputerGame(){
+    if (gameRound === true){
+        $('#player1').text('Player 1 Turn').addClass("border");
+        $('#player2').text('Computer').removeClass("border");
+        player1AvailableSpaces();
+        applyClicksOnSpaces();
+    } else {
+        $('#player1').text('Player 1 Turn').removeClass("border");
+        $('#player2').text('Computer').addClass("border");
+        player2AvailableSpaces();
+        display_stats();
     }
 }
 
@@ -113,6 +128,7 @@ function player2AvailableSpaces(){
                                 } else if (adjacentPlayerContents.hasClass("whiteSquare")){
                                     break;
                                 } else if (adjacentPlayer1Square.hasClass("square")){
+                                    storePossibleMoves.push(adjacentPlayerContents)
                                     adjacentPlayerContents.addClass("highlight");
                                     break;
                                 }else if (adjacentPlayer1Square === undefined){
@@ -266,3 +282,55 @@ function reset_game_bttn(){
     gameRound = true;
     startGame();
 }
+
+function vsComputer(){
+    var randomNumber = null;
+    randomNumber = parseInt(Math.random()*storePossibleMoves.length);
+    storePossibleMoves[randomNumber].addClass("whiteSquare")
+    gameRound = !gameRound;
+    startComputerGame();
+    // store higlighted spaces of player 2 in an array
+    // randomize array to select one 
+    // place player 2 tile on randomized square
+    // change gameRound
+}
+
+function computerFlipCoins(){
+    currentPlacedCoin.addClass("whiteSquare");
+    $('.highlight').off();
+    $(".highlight").removeClass("highlight");
+    for (var rowCoordinate = -1; rowCoordinate<2; rowCoordinate++){
+        for (var colCoordinate = -1; colCoordinate<2; colCoordinate++){
+            coinsToFlip = [];
+            var placedCoinRow = parseInt(currentPlacedCoin.parent().attr("row"));
+            var placedCoinCol = parseInt(currentPlacedCoin.parent().attr("col"));
+            var currentPosition = { x: (placedCoinRow + rowCoordinate), y: (placedCoinCol + colCoordinate)};
+            var adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+            var adjCurrentContents = adjacentToCurrent.find('div');
+            if (adjCurrentContents.hasClass("blackSquare")){
+                coinsToFlip.push(adjCurrentContents);
+                while (adjacentToCurrent.attr("row")>=0 && adjacentToCurrent.attr("row")<8 && adjacentToCurrent.attr("col")>=0 && adjacentToCurrent .attr("col")<8){
+                    currentPosition.x+=rowCoordinate;
+                    currentPosition.y+=colCoordinate;
+                    adjacentToCurrent = $("[row = " + (currentPosition.x) + "][col = " + (currentPosition.y) + "]");
+                    adjCurrentContents = adjacentToCurrent.find('div');
+                    if (adjCurrentContents.hasClass("blackSquare")){
+                        coinsToFlip.push(adjCurrentContents);
+                        continue;
+                    } else if (adjCurrentContents.hasClass("whiteSquare")){
+                        for (flipCoinInd = 0; flipCoinInd<coinsToFlip.length; flipCoinInd++){
+                            coinsToFlip[flipCoinInd].removeClass("blackSquare");
+                            coinsToFlip[flipCoinInd].addClass("whiteSquare")
+                        }
+                        break;
+                    } else if (adjCurrentContents.hasClass("blankSquare")){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    gameRound = !gameRound;
+    startGame();
+}
+    
