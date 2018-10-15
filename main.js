@@ -43,9 +43,6 @@ function create_board(){
     }
 }
 
-var blackSquareCounter = null;
-var whiteSquareCounter = null;
-
 function display_stats() {
     var blackSquareCounter = 0;
     var whiteSquareCounter = 0;
@@ -71,25 +68,17 @@ function reset_game_bttn(){
     startGame();
 }
 
-function determineWinner() {
-    var highlightedSpacesCounter = null;
-    for (arrayRow = 0; arrayRow < 8; arrayRow++) {
-        for (arrayCol = 0; arrayCol < 8; arrayCol++) {
-            var highlightedSquares = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
-            var currentSquare = highlightedSquares.find('div');
-            if (currentSquare.hasClass('highlight2') || currentSquare.hasClass('highlight')){
-                highlightedSpacesCounter++;
-            }
-        }
+//Future feature set to work on
+function determineWinner(whiteScore, blackScore){
+    if (whiteScore > blackScore){
+        //showModal("white");
     }
-    if (highlightedSpacesCounter === null && whiteSquareCounter > blackSquareCounter){
-        showModal("black");
-    }
-    else if ( highlightedSpacesCounter === null && blackSquareCounter > whiteSquareCounter){
-        showModal("white");
+    else{
+        //showModal("black");
     }
 }
 
+//Future feature to work on
 function showModal(color) {
     $('#winModal').removeClass("hide");
     if (color === "white") {
@@ -164,11 +153,10 @@ function player1AvailableSpaces(){
             }
         }
     }
-    determineWinner();
 }
 
 function player2AvailableSpaces(){
-    // console.log("I'm broken here");
+    console.log("I'm broken here");
     for (arrayRow = 0; arrayRow<8; arrayRow++){
         for (arrayCol = 0; arrayCol<8; arrayCol++){
             var currentPlayer1GameSquare = $("[row = " + arrayRow + "][col = " + arrayCol + "]");
@@ -203,7 +191,6 @@ function player2AvailableSpaces(){
             }
         }
     }
-    determineWinner();
 }
 
 function flipCoins(){
@@ -366,7 +353,6 @@ function player1AvailableSpacesEasyComputer(){
             }
         }
     }
-    determineWinner();
 }
 
 function easyComputerAvailableSpaces(){
