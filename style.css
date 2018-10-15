@@ -1,7 +1,6 @@
 *{
     box-sizing: border-box;
 }
-
 body {
     margin: 0;
     height: 100vh;
@@ -13,6 +12,10 @@ body {
     position: relative;
     background-size: 100% 100%;
 }
+/*header {*/
+/*text-align: center;*/
+/*font-size:45px;*/
+/*}*/
 .stats {
     background-color: lightskyblue;
     width: 10%;
@@ -24,17 +27,14 @@ body {
     font-size: 40px;
     color: yellow;
 }
-
 a {
     font-size: smaller;
     color: green;
 }
-
 .rules_div{
     position: relative;
     top: 5%;
 }
-
 .stats_title{
     width: 100%;
     height: 10%;
@@ -43,7 +43,6 @@ a {
     position: relative;
     top: 4%;
 }
-
 .whites_title, .whiteScore, .blacks_title, .blackScore{
     width: 100%;
     height: 10%;
@@ -51,14 +50,22 @@ a {
     /*color: yellow;*/
     /*font-size: ;*/
 }
-
 .resetBtn {
     width: 45%;
     height: 8%;
     border-radius: 3px;
     font-size: large;
+    margin-left: auto;
+    margin-right: auto;
 }
-
+.passBtn {
+    width: 50%;
+    height: 7%;
+    border-radius: 3px;
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+}
 .players {
     background-color: lightskyblue;
     width: 10%;
@@ -68,28 +75,23 @@ a {
     position: absolute;
     text-align: center;
 }
-
 .stats_title, .whites_title, .whiteScore, .blacks_title, .blackScore, .players {
     font-size: 50px;
     color: black;
     font-weight: bolder;
     font-size: 40px;
-
 }
 #player1, #player2{
     width: 100%;
-    position: relative;
-    top: 20%;
-
+    height: 30%;
+    font-size: 50px;
+    /*position: relative;*/
+    /*top: 20%;*/
 }
-
-
-
 .container{
     height: 100vh;
     width: 100vw;
 }
-
 .gameBoardBody {
     width: 60%;
     margin: auto;
@@ -97,22 +99,17 @@ a {
     /*border: solid 1px #3A4655;*/
     font-size: 0;
 }
-
 .row {
     width: 100%;
     height: 25%;
     /*background: green;*/
-
 }
-
 .row_child {
     display: inline-block;
     width: 25%;
     height: 100%;
     border: 1px solid black;
 }
-
-
 .blackSquare {
     width: 100%;
     color: #fff;
@@ -121,54 +118,44 @@ a {
     text-align: center;
     vertical-align: middle;
 }
-
 /* Below is CSS for game board */
-
 .game_board_container {
     width: 100%;
     position: relative;
-    top: 17%;
+    top: 8%;
 }
-
 /*@media only screen and (max-width: 100px) {*/
-    /*.game_board_div {*/
-        /*height: 50%;*/
-        /*width: 50%;*/
-
-    /*}*/
+/*.game_board_div {*/
+/*height: 50%;*/
+/*width: 50%;*/
 /*}*/
-
- .game_board_div {
-     height: 100%;
-     width: 100%;
-
- }
-
- .row {
-     display: flex;
-     justify-content: center;
-     align-content: center;
-     /*background-color: white;*/
- }
-
- .square {
-     display: inline-block;
-     height: 65px;
-     width: 65px;
-     border: 1px solid black;
-     border-radius: 2px;
-     background-color: green;
- }
-
- .whiteSquare {
-       height: 95%;
-       width: 95%;
-       border-radius: 50%;
-       background-color: white;
-       border: 1px solid black;
-       margin: auto;
-   }
-
+/*}*/
+.game_board_div {
+    height: 100%;
+    width: 100%;
+}
+.row {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    /*background-color: white;*/
+}
+.square {
+    display: inline-block;
+    height: 65px;
+    width: 65px;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: green;
+}
+.whiteSquare {
+    height: 95%;
+    width: 95%;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid black;
+    margin: auto;
+}
 .blackSquare {
     height: 95%;
     width: 95%;
@@ -177,13 +164,12 @@ a {
     border: 1px solid white;
     margin: auto;
 }
-
 .winModal {
     position: fixed;
     left: 0;
     top: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 15%;
     background-color: rgba(0,0,0,.9);
     display: flex;
     justify-content: center;
@@ -192,32 +178,28 @@ a {
 }
 .modal-body {
     align-content: center;
+    color: white;
+    font-size: 45px;
 }
 .hide{
     display: none;
 }
-
 .highlight{
     border: 1px solid white;
 }
-
 .testing{
     background-color: hotpink;
 }
-
 .testing2{
     background-color: blue;
 }
-
 .testing3{
     background-color: orange;
 }
-
 .blankSquare{
     width: 100%;
     height: 100%;
 }
-
 .highlight2{
     border: 1px solid yellow;
 }
@@ -228,13 +210,12 @@ a {
 
 .border{
     border-color: black;
-    border-width:2px;
+    border-width:3px;
     border-style:solid;
     color: red;
     font-weight: bold;
+    font-size: 30px;
 }
-
-
 .about_body {
     margin: 0;
     height: 100vh;
@@ -247,14 +228,11 @@ a {
     background-size: 100% 100%;
     display: inline-block;
 }
-
 .about_rules, .team_div{
     color: white;
     font-size: 30px;
     font-weight: bolder;
-
 }
-
 .about_rules {
     height: 45%;
     width: 100%;
@@ -262,7 +240,6 @@ a {
     position: relative;
     top: 5%;
 }
-
 .team_div {
     height: 45%;
     width: 100%;
@@ -270,3 +247,10 @@ a {
     position: relative;
     bottom: 10%;
 }
+.header {
+    font-size: 100px;
+    color: black;
+    text-align: center;
+}
+
+
