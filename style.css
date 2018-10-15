@@ -265,6 +265,10 @@ body {
     display: inline-block;
 }
 
+.about_body > background-image{
+    filter: blur(5px);
+}
+
 .about_rules, .team_div{
     color: white;
     font-size: 30px;
